@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDGs不塑永續</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: url('beach.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: sans-serif;
+    }
+    h1 {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-size: 36px;
+      font-weight: bold;
+      color: #003366;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+    #scoreBoard {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 20px;
+    }
+    .trash {
+      position: absolute;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .trash:hover {
+      transform: scale(1.2);
+    }
+    #message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      font-size: 30px;
+      border-radius: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>SDGs不塑永續</h1>
+  <div id="scoreBoard">分數：0 / 100</div>
+  <div id="message">任務成功！</div>
+
+  <script>
+    const trashTypes = [
+      { src: 'bottle.png', points: 2 },
+      { src: 'box.png', points: 2 },
+      { src: 'bag.png', points: 1 },
+      { src: 'Styrofoam.png', points: 3 },
+      { src: 'cup.png', points: 2 }
+    ];
+
+    let totalScore = 0;
+    const targetScore = 100;
+    const totalTrash = 50;
+
+    function getRandomPosition() {
+      const x = Math.random() * (window.innerWidth - 60);
+      const y = (window.innerHeight / 2) + Math.random() * (window.innerHeight / 2 - 60);
+      return { x, y };
+    }
+
+    function getRandomRotation() {
+      return Math.floor(Math.random() * 360);
+    }
+
+    function createTrash() {
+      for (let i = 0; i < totalTrash; i++) {
+        const type = trashTypes[Math.floor(Math.random() * trashTypes.length)];
+        const { x, y } = getRandomPosition();
+        const rotation = getRandomRotation();
+        const img = document.createElement('img');
+        img.src = 'images/' + type.src;
+        img.className = 'trash';
+        img.style.left = x + 'px';
+        img.style.top = y + 'px';
+        img.style.transform = `rotate(${rotation}deg)`;
+        img.dataset.points = type.points;
+        img.onclick = function () {
+          if (!this.classList.contains('collected')) {
+            totalScore += parseInt(this.dataset.points);
+            document.getElementById('scoreBoard').innerText = `分數：${totalScore} / ${targetScore}`;
+            this.classList.add('collected');
+            this.style.display = 'none';
+            if (document.querySelectorAll('.trash:not(.collected)').length === 0 && totalScore >= targetScore) {
+              document.getElementById('message').style.display = 'block';
+            }
+          }
+        };
+        document.body.appendChild(img);
+      }
+    }
+
+    createTrash();
+  </script>
+</body>
+</html>
