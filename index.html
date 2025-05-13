@@ -72,16 +72,16 @@
     });
 
     const trashTypes = [
-      { src: 'bottle.png', points: 2 },
-      { src: 'box.png', points: 2 },
-      { src: 'bag.png', points: 1 },
-      { src: 'Styrofoam.png', points: 3 },
-      { src: 'cup.png', points: 2 }
+      { src: 'bottle.png', points: 3 },
+      { src: 'box.png', points: 3 },
+      { src: 'bag.png', points: 2 },
+      { src: 'Styrofoam.png', points: 4 },
+      { src: 'cup.png', points: 3 }
     ];
 
     let totalScore = 0;
     const targetScore = 100;
-    const totalTrash = 50;
+    const totalTrash = 60; // 提高垃圾數量以確保達到 100 分
 
     function getRandomPosition() {
       const x = Math.random() * (window.innerWidth - 60);
