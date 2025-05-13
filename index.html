@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SDGs不塑永續</title>
+  <title>SDGs不塑永續-淨灘</title>
   <style>
     body {
       margin: 0;
       overflow: hidden;
-      background: url('beach.jpeg') no-repeat center center fixed;
+      background: url('images/beach.jpeg') no-repeat center center fixed;
       background-size: cover;
       font-family: sans-serif;
+      cursor: url('images/cursor.png'), auto;
     }
     h1 {
       position: fixed;
@@ -34,7 +35,6 @@
     }
     .trash {
       position: absolute;
-      cursor: pointer;
       transition: transform 0.2s;
     }
     .trash:hover {
@@ -54,11 +54,23 @@
   </style>
 </head>
 <body>
-  <h1>SDGs不塑永續</h1>
+  <h1>SDGs不塑永續-淨灘</h1>
   <div id="scoreBoard">分數：0 / 100</div>
   <div id="message">任務成功！</div>
+  <audio id="bgm" src="audio/background.mp3" autoplay loop></audio>
 
   <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const bgm = document.getElementById('bgm');
+      bgm.play().catch(() => {
+        const resumeAudio = () => {
+          bgm.play();
+          document.removeEventListener('click', resumeAudio);
+        };
+        document.addEventListener('click', resumeAudio);
+      });
+    });
+
     const trashTypes = [
       { src: 'bottle.png', points: 2 },
       { src: 'box.png', points: 2 },
