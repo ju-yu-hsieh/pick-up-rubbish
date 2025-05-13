@@ -55,7 +55,7 @@
 </head>
 <body>
   <h1>SDGs不塑永續-淨灘</h1>
-  <div id="scoreBoard">分數：0 / 100</div>
+  <div id="scoreBoard">分數：0</div>
   <div id="message">任務成功！</div>
   <audio id="bgm" src="audio/background.mp3" autoplay loop></audio>
 
@@ -80,8 +80,7 @@
     ];
 
     let totalScore = 0;
-    const targetScore = 100;
-    const totalTrash = 60; // 提高垃圾數量以確保達到 100 分
+    const totalTrash = 50; // 垃圾總數改為 50 個
 
     function getRandomPosition() {
       const x = Math.random() * (window.innerWidth - 60);
@@ -108,10 +107,10 @@
         img.onclick = function () {
           if (!this.classList.contains('collected')) {
             totalScore += parseInt(this.dataset.points);
-            document.getElementById('scoreBoard').innerText = `分數：${totalScore} / ${targetScore}`;
+            document.getElementById('scoreBoard').innerText = `分數：${totalScore}`;
             this.classList.add('collected');
             this.style.display = 'none';
-            if (document.querySelectorAll('.trash:not(.collected)').length === 0 && totalScore >= targetScore) {
+            if (document.querySelectorAll('.trash:not(.collected)').length === 0) {
               document.getElementById('message').style.display = 'block';
             }
           }
